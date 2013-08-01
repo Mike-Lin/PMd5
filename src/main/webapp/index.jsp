@@ -5,6 +5,19 @@
 <head><title>First JSP</title></head>
 <body>
 
+<c:if test="${!empty list}" >
+
+    <c:forEach items="${list}" var="p" >
+
+        ${p.aqi}
+
+    </c:forEach>
+
+</c:if>
+
+${name}
+
+
 </body>
 
 </html>

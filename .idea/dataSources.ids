@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><component name="dataSourceStorage">
+  <data-source source="LOCAL" name="Data Source" product="" version="" jdbc-version="" driver-name="" driver-version="" uuid="40cdc3cf-16bb-4023-9808-6dba607dc8af">
+    <synchronize>true</synchronize>
+    <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+    <jdbc-url>jdbc://mysql:localhost:3306/pm2d5</jdbc-url>
+    <user-name>root</user-name>
+    <user-password>dfd8dfc5dfc5dfde</user-password>
+    <libraries>
+      <library>
+        <url>jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.19/mysql-connector-java-5.1.19.jar!/</url>
+      </library>
+    </libraries>
+    <ssh-properties>
+      <enabled>false</enabled>
+      <proxy-host></proxy-host>
+      <proxy-port>22</proxy-port>
+      <user></user>
+      <use-password>true</use-password>
+      <password></password>
+      <private-key-path></private-key-path>
+      <passphrase></passphrase>
+      <remote-host></remote-host>
+      <remote-port></remote-port>
+      <local-port></local-port>
+    </ssh-properties>
+  </data-source>
+</component>

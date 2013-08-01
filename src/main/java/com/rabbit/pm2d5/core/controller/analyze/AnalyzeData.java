@@ -1,6 +1,7 @@
 package com.rabbit.pm2d5.core.controller.analyze;
 
 
+import com.rabbit.pm2d5.core.domain.PM2d5;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
@@ -11,6 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -43,20 +46,18 @@ public class AnalyzeData {
 
         try {
 
-            System.out.println("executing request " + httpget.getURI());
-
             // Create a response handler
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
             String responseBody = httpclient.execute(httpget, responseHandler);
 
             JSONArray jsonArray = new JSONArray(responseBody);
+            PM2d5.dao.add(jsonArray);
             for (int i=0 ; i<jsonArray.length(); i++) {
 
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                 String area = (String) jsonObject.get("area");
 
             }
-
 
         } catch (JSONException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -71,6 +72,50 @@ public class AnalyzeData {
             httpclient.getConnectionManager().shutdown();
         }
 
+    }
+
+    public List<PM2d5> getList() {
+
+        List<PM2d5> list = new ArrayList<PM2d5>();
+
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpget = new HttpGet("http://www.pm25.in/api/querys/pm2_5.json?city=珠海&token=5j1znBVAsnSf5xQyNQyq");
+
+        try {
+
+            // Create a response handler
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            String responseBody = httpclient.execute(httpget, responseHandler);
+
+            JSONArray jsonArray = new JSONArray(responseBody);
+            PM2d5.dao.add(jsonArray);
+            for (int i=0 ; i<jsonArray.length(); i++) {
+
+                JSONObject jo = (JSONObject) jsonArray.get(i);
+
+                PM2d5 pm2d5 = new PM2d5();
+                pm2d5.setAqi(jo.getString("aqi"));
+
+                list.add(i, pm2d5);
+
+            }
+
+            return list;
+
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } finally {
+            // When HttpClient instance is no longer needed,
+            // shut down the connection manager to ensure
+            // immediate deallocation of all system resources
+            httpclient.getConnectionManager().shutdown();
+        }
+
+        return null;
     }
 
 
