@@ -1,0 +1,82 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <style type="text/css">
+        .tableClass
+        {
+            border: 1px solid red;
+            border-collapse: collapse;
+        }
+        .tableClass tr td, .tableClass tr th
+        {
+            border: 1px solid red;
+            height: 30px;
+            line-height: 30px;
+            font-family: "微软雅黑";
+            font-size: 14px;
+            color: #000000;
+            text-align: center;
+        }
+        .tableClass tr th
+        {
+            background-color:Purple;
+        }
+        .oddtrcolor, .oddtrcolor tr td
+        {
+            background-color:Yellow;
+        }
+        .eventrcolor, .eventrcolor tr td
+        {
+            background-color: Lime;
+        }
+    </style>
+</head>
+<body>
+<form id="form1" runat="server">
+    <div>
+        <h2>
+            隔行变背景色</h2>
+        <table cellpadding="0" cellspacing="0" class="tableClass" width="500px">
+            <tr>
+                <th>
+                    列一
+                </th>
+                <th>
+                    列二
+                </th>
+                <th>
+                    列三
+                </th>
+                <th>
+                    列四
+                </th>
+            </tr>
+            <%for (int i = 1; i < 11; i++)
+            { %>
+            <%if (i % 2 == 0)
+            {%>
+            <tr class="eventrcolor">
+                <%}
+                else
+                { %>
+            <tr class="oddtrcolor">
+                <%} %>
+                <td>
+                    第[<%:i %>]行第一列
+                </td>
+                <td>
+                    第[<%:i %>]行第二列
+                </td>
+                <td>
+                    第[<%:i %>]行第三列
+                </td>
+                <td>
+                    第[<%:i %>]行第四列
+                </td>
+            </tr>
+            <%} %>
+        </table>
+    </div>
+</form>
+</body>
+</html>

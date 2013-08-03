@@ -1,6 +1,8 @@
 package com.rabbit.pm2d5.core.controller.analyze;
 
 
+import com.rabbit.pm2d5.core.domain.City;
+import com.rabbit.pm2d5.core.domain.PM;
 import com.rabbit.pm2d5.core.domain.PM2d5;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
@@ -74,12 +76,12 @@ public class AnalyzeData {
 
     }
 
-    public List<PM2d5> getList() {
+    public List<City> citys() {
 
-        List<PM2d5> list = new ArrayList<PM2d5>();
+        List<City> list = new ArrayList<City>();
 
         DefaultHttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet("http://www.pm25.in/api/querys/pm2_5.json?city=珠海&token=5j1znBVAsnSf5xQyNQyq");
+        HttpGet httpget = new HttpGet("http://www.pm25.in/api/querys/station_names.json?token=5j1znBVAsnSf5xQyNQyq");
 
         try {
 
@@ -88,15 +90,76 @@ public class AnalyzeData {
             String responseBody = httpclient.execute(httpget, responseHandler);
 
             JSONArray jsonArray = new JSONArray(responseBody);
-            PM2d5.dao.add(jsonArray);
             for (int i=0 ; i<jsonArray.length(); i++) {
 
                 JSONObject jo = (JSONObject) jsonArray.get(i);
 
-                PM2d5 pm2d5 = new PM2d5();
-                pm2d5.setAqi(jo.getString("aqi"));
+                City c = new City();
+                c.setName(jo.getString("name"));
 
-                list.add(i, pm2d5);
+                list.add(c);
+
+            }
+
+            return list;
+
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } finally {
+            // When HttpClient instance is no longer needed,
+            // shut down the connection manager to ensure
+            // immediate deallocation of all system resources
+            httpclient.getConnectionManager().shutdown();
+        }
+
+        return null;
+    }
+
+    public List<PM> listByCity(String city) {
+
+        List<PM> list = new ArrayList<PM>();
+
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpget = new HttpGet("http://www.pm25.in/api/querys/aqi_details.json?token=5j1znBVAsnSf5xQyNQyq&city="+city);
+
+        try {
+
+            // Create a response handler
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            String responseBody = httpclient.execute(httpget, responseHandler);
+
+            JSONArray jsonArray = new JSONArray(responseBody);
+            for (int i=0 ; i<jsonArray.length(); i++) {
+
+                JSONObject jo = (JSONObject) jsonArray.get(i);
+
+                PM pm = new PM();
+                pm.setAqi(jo.getString("aqi"));
+                pm.setPositionName(jo.getString("position_name"));
+                pm.setStationCode(jo.getString("station_code"));
+                pm.setSo2(jo.getString("so2"));
+                pm.setSo2_24h(jo.getString("so2_24h"));
+                pm.setNo2(jo.getString("no2"));
+                pm.setNo2_24h(jo.getString("no2_24h"));
+                pm.setPm10(jo.getString("pm10"));
+                pm.setPm10_24h(jo.getString("pm10_24h"));
+                pm.setCo(jo.getString("co"));
+                pm.setCo_24h(jo.getString("co_24h"));
+                pm.setO3(jo.getString("o3"));
+                pm.setO3_24h(jo.getString("o3_24h"));
+                pm.setO3_8h(jo.getString("o3_8h"));
+                pm.setO3_8h_24h(jo.getString("o3_8h_24h"));
+                pm.setPm2_5(jo.getString("pm2_5"));
+                pm.setPm2_5_24h(jo.getString("pm2_5_24h"));
+                pm.setPrimaryPollutant(jo.getString("primary_pollutant"));
+                pm.setQuality(jo.getString("quality"));
+                pm.setTimePoint(jo.getString("time_point"));
+
+                list.add(pm);
 
             }
 

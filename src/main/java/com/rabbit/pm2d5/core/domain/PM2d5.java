@@ -265,4 +265,30 @@ public class PM2d5 extends Model<PM2d5> {
 
     }
 
+    @Override
+    public String toString() {
+        return "PM2d5{" +
+                "id=" + id +
+                ", aqi='" + aqi + '\'' +
+                ", positionName='" + positionName + '\'' +
+                ", stationCode='" + stationCode + '\'' +
+                ", so2='" + so2 + '\'' +
+                ", so2_24h='" + so2_24h + '\'' +
+                ", no2='" + no2 + '\'' +
+                ", no2_24h='" + no2_24h + '\'' +
+                ", pm10='" + pm10 + '\'' +
+                ", pm10_24h='" + pm10_24h + '\'' +
+                ", co='" + co + '\'' +
+                ", co_24h='" + co_24h + '\'' +
+                ", o3='" + o3 + '\'' +
+                ", o3_24h='" + o3_24h + '\'' +
+                ", o3_8h='" + o3_8h + '\'' +
+                ", o3_8h_24h='" + o3_8h_24h + '\'' +
+                ", pm2_5='" + pm2_5 + '\'' +
+                ", pm2_5_24h='" + pm2_5_24h + '\'' +
+                ", primaryPollutant='" + primaryPollutant + '\'' +
+                ", quality='" + quality + '\'' +
+                ", timePoint='" + timePoint + '\'' +
+                '}';
+    }
 }

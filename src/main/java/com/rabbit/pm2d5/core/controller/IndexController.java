@@ -3,7 +3,7 @@ package com.rabbit.pm2d5.core.controller;
 
 import com.jfinal.core.Controller;
 import com.rabbit.pm2d5.core.controller.analyze.AnalyzeData;
-import com.rabbit.pm2d5.core.domain.PM2d5;
+import com.rabbit.pm2d5.core.domain.PM;
 
 import java.util.List;
 
@@ -20,27 +20,33 @@ public class IndexController extends Controller {
     // 首页
     public void index() {
 
-
-        setAttr("name","linjinzhu");
-
         // 获取数据
         AnalyzeData analyzeData = new AnalyzeData();
-        List<PM2d5> list = analyzeData.getList();
+        List<PM> list = analyzeData.listByCity("shanghai");
 
+
+        // 当前城市的总体情况
+        PM pm = list.get(list.size() - 1);
+        setAttr("pm", pm);
 
         // 数据放到session
+        list.remove(list.size() -1);
         setAttr("list", list);
-
-
 
         renderJsp("/index.jsp");
 
     }
 
-    public void indexhtml() {
+    public void city() {
 
-        render("/index.html");
 
+
+        render("/city.jsp");
+
+    }
+
+    public void testHtml() {
+        render("test.html");
     }
 
 
