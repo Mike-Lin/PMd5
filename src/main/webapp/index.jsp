@@ -2,7 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
-<head><title>JSP</title></head>
+<head><title>PM2d5</title></head>
 
 <style type="text/css">
 
